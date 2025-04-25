@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <script src="https://kit.fontawesome.com/50e712d75a.js" crossorigin="anonymous"></script>
+    <title>Dispensador</title>
+</head>
+
+<body>
+    <div class="container">
+        <div class="infodispensador">
+            <div class="info"style="background-color: white; border-radius:5px;">
+                <h2 id="euros">Euros: 25 <i class="fa-solid fa-euro-sign"></i></h2>
+                <p>Litros</p>
+                
+                <p>Carburant: Gasoil</p>
+                <p id="precioLitro">Preu: 1.31 e/l</p>
+            </div> 
+        </div>
+
+        <div class="infedispensador">
+            <button><i class="fa-solid fa-gas-pump" style="color: #00a6ff;"></i> Despenjar maniga</button>
+            <button id="stop">Atura</button>
+            <button id="continue" style="display: none;">Continua</button>
+            <button><i class="fa-solid fa-gas-pump" style="color: #ff000d;"></i> Penjar maniga</button>
+        </div>
+    </div>
+</body>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const eurosElemento = document.querySelector(".infodispensador h2:first-child");
+        const litrosElemento = document.querySelector(".infodispensador p:nth-child(2)");
+        const precioLitroTexto = document.querySelector(".infodispensador p:nth-child(4)").textContent;
+        const despenjarBtn = document.querySelector(".infedispensador button:first-child");
+        const penjarBtn = document.querySelector(".infedispensador button:last-child");
+
+        const precioPorLitro = parseFloat(precioLitroTexto.match(/\d+(\.\d+)?/)[0]);
+        const totalEuros = parseFloat(eurosElemento.textContent.match(/\d+/)[0]);
+        const maxLitros = totalEuros / precioPorLitro;
+        console.log(maxLitros);
+        let litros = 0;
+        let interval;
+
+        despenjarBtn.addEventListener("click", function () {
+            if (!interval) {
+                interval = setInterval(() => {
+                    if (litros <= maxLitros) {
+                        litros += 0.1; // Incremento progresivo
+                        litrosElemento.textContent = `Litros: ${litros.toFixed(2)}`;
+                    } else {
+                        clearInterval(interval);
+                    }
+                }, 100);
+            }
+        });
+
+        penjarBtn.addEventListener("click", function () {
+            clearInterval(interval);
+            interval = null;
+        });
+    });
+
+</script>
+
+</html>
