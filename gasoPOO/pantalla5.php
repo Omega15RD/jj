@@ -81,6 +81,7 @@ if (isset($_POST['nova_operacio'])) {
 
         $stmt->close();
         $mysqli->close();
+        header("Location: ../dispensador/dispensador.php");
     }
     ?>
 </body>
