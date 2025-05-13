@@ -5,6 +5,10 @@ session_start();
 
 
 
+// Comprovem si s'ha enviat una selecció de surtidor
+if (isset($_POST['gasolina'])) {
+    $_SESSION['repostatge']->combustible = $_POST['gasolina']; // Actualitzem el surtidor a l'objecte
+}
 // Comprovem si s'ha enviat una quantitat
 if (isset($_POST['quantitat'])) {
     $_SESSION['repostatge']->quantitat = $_POST['quantitat']; // Actualitzem la quantitat a l'objecte
@@ -57,7 +61,8 @@ if (isset($_POST['quantitat'])) {
 
     <form action="pantalla4.php" method="POST">
         <input type="text" name="quantitat" id="quantitat" class="display"
-            value="<?php echo isset($_SESSION['repostatge']->quantitat) ?>" readonly>
+            value="<?php echo isset($_SESSION['repostatge']->quantitat) ? $_SESSION['repostatge']->quantitat : '' ?>">
+
 
         <div class="keyboard">
             <button type="button" onclick="addNumber(1)">1</button>

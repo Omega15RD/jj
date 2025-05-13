@@ -40,7 +40,6 @@ if (isset($_POST['pagament'])) {
 <body>
     <div class="header">bonArea</div>
     <h1>Selecciona el mètode de pagament</h1>
-    <p><strong>Quantitat:</strong> <?php echo isset($_SESSION['repostatge']->quantitat) ?> Euros</p>
 
     <form action="pantalla5.php" method="POST">
         <button type="submit" name="pagament" value="Efectiu" class="payment-option efectiu">Efectiu</button>

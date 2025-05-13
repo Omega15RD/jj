@@ -1,6 +1,7 @@
 <?php
 include('./Repostatge.php');
 include('./autoload.php');
+include('./conn.php');
 session_start();
 
 // Comprovem si s'ha enviat el mètode de pagament
@@ -61,7 +62,27 @@ if (isset($_POST['nova_operacio'])) {
     <form action="pantalla1.php" method="post">
         <button class="nova-operacio" type="submit" name="nova_operacio">Nova Operació</button>
     </form>
+    <form action="pantalla5.php" method="post">
+        <button type="submit" name="pagar"
+            style="background-color:#4CAF50;color:white;padding:1%;border-radius:5px;cursor:pointer;">
+            Pagar
+        </button>
+    </form>
+    <?php
+    if (isset($_POST['pagar'])) {
+        $combustible = $_SESSION['repostatge']->combustible;
+        $quantitat = $_SESSION['repostatge']->quantitat;
+        $surtidor = $_SESSION['repostatge']->surtidor;
+        $fet = false;
 
+        $stmt = $mysqli->prepare("INSERT INTO Surtidor (Combustible, Quantitat, Surtidors, Fet) VALUES (?, ?, ?, ?)");
+        $stmt->bind_param("siii", $combustible, $quantitat, $surtidor, $fet);
+        $insercioExitosa = $stmt->execute();
+
+        $stmt->close();
+        $mysqli->close();
+    }
+    ?>
 </body>
 
 </html>
